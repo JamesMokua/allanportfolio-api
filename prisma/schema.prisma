@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model AdministratorUser {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Projects  Project[]
+}
+
+model Project {
+  id          String            @id @default(uuid())
+  name        String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  description String            @db.VarChar(1000)
+  countries   String
+  images      String
+  belongsToId String
+  belongsTo   AdministratorUser @relation(fields: [belongsToId], references: [id])
+  updates     Update[]
+
+  @@unique([id, belongsToId])
+}
+
+enum UPDATE_STATUS {
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model Update {
+  id        String        @id @default(uuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  title     String
+  content   String?
+  status    UPDATE_STATUS @default(IN_PROGRESS)
+  version   String?
+  image     String?
+  country   String?
+  projectId String
+  project   Project       @relation(fields: [projectId], references: [id])
+}
