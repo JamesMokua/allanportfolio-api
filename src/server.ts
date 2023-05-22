@@ -3,7 +3,7 @@ import cors from "cors";
 import router from "./router";
 import morgan from 'morgan'
 import * as dotenv from 'dotenv'
-import { protect } from "./modules/auth";
+import { protect, refreshJWT } from "./modules/auth";
 import { createNewUser, signIn } from "./handlers/user";
 import e from "express";
 import config from "./config";
@@ -36,6 +36,7 @@ app.get("/", (req, res) => {
 app.use('/api',protect, router)
 app.post('/user', createNewUser)
 app.post('/signin', signIn)
+app.post('/refresh', refreshJWT)
 
 app.use((err,req,res,next) => {
   if(err.type === 'auth'){

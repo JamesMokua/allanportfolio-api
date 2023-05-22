@@ -1,5 +1,6 @@
 import prisma from "../db";
-import { createJWT, hashPassword, comparePasswords } from "../modules/auth";
+import { createJWT, hashPassword, comparePasswords, refreshJWT } from "../modules/auth";
+import jwt from 'jsonwebtoken'
 
 export const createNewUser = async (req, res,next) => {
   try {
@@ -33,4 +34,32 @@ export const signIn = async (req, res) => {
   }
   const token = createJWT(user);
   res.json({ token });
+};
+export const refreshToken = async (req, res) => {
+  const bearer = req.headers.authorization;
+
+  if (!bearer) {
+    res.status(401);
+    res.json({ message: "Not Authorized" });
+    return;
+  }
+
+  const [, token] = bearer.split(' ');
+
+  if (!token) {
+    res.status(401);
+    res.json({ message: "Not Valid Token" });
+    return;
+  }
+
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+
+    const newToken = refreshJWT(user);
+    res.json({ token: newToken });
+  } catch (error) {
+    res.status(401);
+    res.json({ message: "Not Valid Token" });
+    return;
+  }
 };

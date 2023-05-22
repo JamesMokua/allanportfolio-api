@@ -7,6 +7,7 @@ import { createUpdate, deleteUpdate, getOneUpdate, getUpdates, updateUpdate } fr
 
 const router = Router();
 
+
 //Project routes
 router.get("/project", getProjects);
 router.get("/project/:id", getOneProject);
