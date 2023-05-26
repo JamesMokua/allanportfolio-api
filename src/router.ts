@@ -1,8 +1,7 @@
 import { Router } from "express";
 import { body, oneOf, validationResult } from "express-validator";
 import { handleInputErrors } from "./modules/middleware";
-import { on } from "events";
-import { createProject, deleteProject, getOneProject, getProjects } from "./handlers/project";
+import { createProject, deleteProject, getOneProject, getProjects, updateProject } from "./handlers/project";
 import { createUpdate, deleteUpdate, getOneUpdate, getUpdates, updateUpdate } from "./handlers/update";
 
 const router = Router();
@@ -15,7 +14,7 @@ router.put(
   "/project/:id",
   body("name").isString(),
   handleInputErrors,
-  (req, res) => {}
+updateProject
 );
 router.post(
   "/project",
@@ -42,7 +41,7 @@ router.post(
   body("title").exists().isString(),
   body("content").exists().isString(),
   body("country").exists().isString(),
-  body('productId').exists().isString(),
+  body('projectId').exists().isString(),
   createUpdate
 );
 router.delete("/update/:id", deleteUpdate  );

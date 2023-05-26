@@ -13,7 +13,7 @@ export const createJWT = (user) => {
   const token = jwt.sign(
     { id: user.id, name: user.name },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" } // Set token expiration time as desired, e.g., 1 hour
+    { expiresIn: "720h" } // Set token expiration time as desired, e.g., 1 hour
   );
   return token;
 };
@@ -22,7 +22,7 @@ export const refreshJWT = (user) => {
   const token = jwt.sign(
     { id: user.id, name: user.name },
     process.env.JWT_SECRET,
-    { expiresIn: "1h" } // Set the same expiration time as the original token
+    { expiresIn: "720h" } // Set the same expiration time as the original token
   );
   return token;
 };
