@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { body, oneOf, validationResult } from "express-validator";
+import { body } from "express-validator";
 import { handleInputErrors } from "./modules/middleware";
 import { createProject, deleteProject, getOneProject, getProjects, updateProject } from "./handlers/project";
 import { createUpdate, deleteUpdate, getOneUpdate, getUpdates, updateUpdate } from "./handlers/update";

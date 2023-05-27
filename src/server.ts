@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
 app.use('/api',protect, router)
 app.post('/user', createNewUser)
 app.post('/signin', signIn)
-app.post('/refresh', refreshToken)
+
 
 app.use((err,req,res,next) => {
   if(err.type === 'auth'){
