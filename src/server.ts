@@ -4,8 +4,7 @@ import router from "./router";
 import morgan from 'morgan'
 import * as dotenv from 'dotenv'
 import { protect } from "./modules/auth";
-import { createNewUser, refreshToken, signIn } from "./handlers/user";
-import e from "express";
+import { createNewUser, signIn } from "./handlers/user";
 import config from "./config";
 dotenv.config()
 
